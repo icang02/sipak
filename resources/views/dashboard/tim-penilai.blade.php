@@ -1,5 +1,11 @@
 @extends('layouts.dashboard')
 
+@push('link')
+  <link rel="stylesheet" href="{{ asset('datatable/datatables.css') }}">
+  <script src="{{ asset('datatable/jQuery-3.6.0/jquery-3.6.0.js') }}"></script>
+  <script src="{{ asset('datatable/datatables.js') }}"></script>
+@endpush
+
 @section('main-content')
   {{-- MODAL TAMBAH --}}
   <div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
@@ -82,6 +88,17 @@
               @enderror
               {{-- END ALERT --}}
 
+              @push('script')
+                <script>
+                  // $('#table').DataTable();
+                  $('#table').DataTable({
+                    buttons: [
+                      'copy', 'excel', 'pdf'
+                    ]
+                  });
+                </script>
+              @endpush
+
               <div class="table-responsive">
                 <table class='table table-bordered table-striped table-hover table-sm' id="table1">
                   <thead>
@@ -121,7 +138,8 @@
                                 d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                             </svg>
                           </button>
-                          <form action="{{ route('destroy.tim.penilai', $item->id) }}" class="d-inline" method="post">
+                          <form action="{{ route('destroy.tim.penilai', $item->id) }}" class="d-inline"
+                            method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger badge" style="border-radius: 4px;">

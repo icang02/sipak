@@ -5,6 +5,7 @@ use App\Http\Controllers\DupakController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\TimPenilaiController;
 use App\Models\Dupak;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/seed', function () {
+    return Artisan::class('migrate:fresh --seed');
+});
+
+Route::get('/export', [DupakController::class, 'export'])->name('export');
 
 Route::get('/', function () {
     return view('auth.login');

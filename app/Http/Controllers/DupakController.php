@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Dupak;
 use App\Models\Jabatan;
 use App\Models\TimPenilai;
+use App\Exports\ViewExporter;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DupakController extends Controller
 {
@@ -89,5 +91,13 @@ class DupakController extends Controller
         ]);
 
         return redirect()->route('data.dupak')->with('success', 'Data DUPAK berhasil diupdate.');
+    }
+
+    public function export()
+    {
+        return Excel::download(
+            new ViewExporter(),
+            'data-dupak-export.xlsx'
+        );
     }
 }

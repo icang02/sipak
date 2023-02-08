@@ -11,7 +11,7 @@
           <div class="avatar me-1">
             <img src="{{ asset('voler') }}/assets/images/avatar/user.png" alt="" srcset="">
           </div>
-          <div class="d-none d-md-block d-lg-inline-block">Hi, Admin</div>
+          <div class="d-none d-md-block d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
         </a>
         <div class="dropdown-menu dropdown-menu-end">
           <a class="dropdown-item" href="#"><i data-feather="user"></i> Account</a>

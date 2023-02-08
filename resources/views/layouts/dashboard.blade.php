@@ -16,6 +16,9 @@
 
   {{-- Data table --}}
   <link rel="stylesheet" href="{{ asset('voler') }}/assets/vendors/simple-datatables/style.css">
+
+  {{-- PUSH LINK --}}
+  @stack('link')
 </head>
 
 <body>
@@ -45,6 +48,8 @@
   @if (!request()->is('dashboard'))
     <script src="{{ asset('voler') }}/assets/js/vendors.js"></script>
   @endif
+
+  @stack('script')
 
 </body>
 

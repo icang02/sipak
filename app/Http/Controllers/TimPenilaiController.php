@@ -23,7 +23,7 @@ class TimPenilaiController extends Controller
 
         return view('dashboard.list-nama', [
             'title' => 'List Nama',
-            'dupak' => $data,
+            'data' => $data,
             'timPenilai' => $timPenilai,
         ]);
     }

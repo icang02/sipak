@@ -34,12 +34,12 @@
           </a>
         </li>
 
-        <li class="sidebar-item  has-sub">
+        <li class="sidebar-item has-sub {{ request()->is('jabatan') ? 'active' : '' }}"">
           <a href="#" class='sidebar-link'>
             <i data-feather="briefcase" width="20"></i>
             <span>Master Data</span>
           </a>
-          <ul class="submenu ">
+          <ul class="submenu {{ request()->is('jabatan') ? 'active' : '' }}"">
             <li>
               <a href="{{ route('index.jabatan') }}">List Jabatan</a>
             </li>
