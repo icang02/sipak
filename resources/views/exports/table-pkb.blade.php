@@ -28,7 +28,7 @@
         <td>{{ $item->golongan }}</td>
         @if (!request()->is('data-pkb/export'))
           <td class="text-nowrap">
-            <a href="{{ route('show.pkb', $item->nip) }}" class="btn btn-primary badge" style="border-radius: 4px;">
+            <a href="{{ route('show.pkb', $item->id) }}" class="btn btn-primary badge" style="border-radius: 4px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-eye" viewBox="0 0 16 16">
                 <path

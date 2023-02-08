@@ -16,4 +16,9 @@ class PKB extends Model
     {
         return $this->belongsTo(Jabatan::class);
     }
+
+    public function data_dupak()
+    {
+        return $this->hasMany(DataDupak::class, 'pkb_id');
+    }
 }

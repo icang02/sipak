@@ -27,6 +27,9 @@ class PKBController extends Controller
 
     public function show(PKB $data)
     {
-        dd($data);
+        // dd($data);
+        return view('dashboard.data-pkb-show', [
+            'data' => $data,
+        ]);
     }
 }

@@ -20,6 +20,7 @@ class CreatePkbTable extends Migration
             $table->foreignId('jabatan_id');
             $table->string('pangkat', 20)->nullable();
             $table->string('golongan', 10)->nullable();
+            $table->string('kota', 50)->nullable();
         });
     }
 
