@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DupakController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\PKBController;
 use App\Http\Controllers\TimPenilaiController;
 use App\Models\Dupak;
 use Illuminate\Support\Facades\Artisan;
@@ -37,6 +38,10 @@ Route::get('/dashboard', function () {
     ]);
 })->name('dashboard')->middleware('auth');
 
+// ROUTE DATA PKB
+Route::get('data-pkb', [PKBController::class, 'index'])->name('data.pkb')->middleware('auth');
+Route::get('data-pkb/export', [PKBController::class, 'export'])->name('data.pkb.export')->middleware('auth');
+Route::get('data-pkb/{data}', [PKBController::class, 'show'])->middleware('auth')->name('show.pkb');
 
 Route::get('/data-dupak', [DupakController::class, 'index'])->name('data.dupak')->middleware('auth');
 Route::get('/data-dupak/add', [DupakController::class, 'create'])->name('add.dupak')->middleware('auth');

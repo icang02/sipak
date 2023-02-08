@@ -34,6 +34,13 @@
           </a>
         </li>
 
+        <li class="sidebar-item {{ request()->is('data-pkb*') ? 'active' : '' }}">
+          <a href="{{ route('data.pkb') }}" class='sidebar-link'>
+            <i data-feather="file-text" width="20"></i>
+            <span>Data PKB</span>
+          </a>
+        </li>
+
         <li class="sidebar-item has-sub {{ request()->is('jabatan') ? 'active' : '' }}"">
           <a href="#" class='sidebar-link'>
             <i data-feather="briefcase" width="20"></i>
