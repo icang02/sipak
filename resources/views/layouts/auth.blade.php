@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - DUPAK BKBBN</title>
+  <title>Login - SIPAK</title>
   <link rel="stylesheet" href="{{ asset('voler') }}/assets/css/bootstrap.css">
 
   <link rel="shortcut icon" href="{{ asset('voler') }}/assets/images/favicon.ico" type="image/x-icon">

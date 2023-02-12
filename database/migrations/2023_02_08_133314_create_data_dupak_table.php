@@ -19,8 +19,9 @@ class CreateDataDupakTable extends Migration
             $table->foreignId('pak_janjun')->nullable();
             $table->foreignId('pak_juldes')->nullable();
             $table->string('tahun')->nullable();
-            $table->boolean('skp')->nullable()->default(false);
-            $table->boolean('verifikasi')->nullable()->default(false);
+            $table->boolean('verifikasi_pak_janjun')->nullable()->default(false);
+            $table->boolean('verifikasi_pak_juldes')->nullable()->default(false);
+            $table->string('file')->nullable();
         });
     }
 

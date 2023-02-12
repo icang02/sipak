@@ -6,6 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - DUPAK BKKBN</title>
 
+  <style>
+    .alert {
+      -webkit-animation: fadein 1s;
+    }
+
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="{{ asset('voler') }}/assets/css/bootstrap.css">
 
   <link rel="stylesheet" href="{{ asset('voler') }}/assets/vendors/chartjs/Chart.min.css">
@@ -50,6 +68,15 @@
   @endif
 
   @stack('script')
+
+  {{-- Animasi ALERT --}}
+  <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 4000);
+  </script>
 
 </body>
 

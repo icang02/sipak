@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataDupak;
 use App\Models\Dupak;
+use App\Models\PKB;
 use App\Models\TimPenilai;
 use Illuminate\Http\Request;
 
@@ -19,12 +21,18 @@ class TimPenilaiController extends Controller
     public function show(TimPenilai $list)
     {
         $timPenilai = $list->id;
-        $data = Dupak::where('pak_janjun', $timPenilai)->orWhere('pak_juldes', $timPenilai)->orderBy('nama')->get();
+        $data = DataDupak::where('pak_janjun', $timPenilai)->orWhere('pak_juldes', $timPenilai)->get();
+
+        $array = [];
+        foreach ($data as $item) {
+            array_push($array, $item->pkb_id);
+        }
+        $dataPKB = PKB::whereIn('id', $array)->orderBy('nama')->get();
 
         return view('dashboard.list-nama', [
             'title' => 'List Nama',
-            'data' => $data,
-            'timPenilai' => $timPenilai,
+            'data' => $dataPKB,
+            'timPenilai' => $list,
         ]);
     }
 
@@ -68,6 +76,11 @@ class TimPenilaiController extends Controller
 
     public function destroy(TimPenilai $data)
     {
+        $cek = DataDupak::where('pak_janjun', $data->id)->orWhere('pak_juldes', $data->id)->count();
+        if ($cek > 0) {
+            return back()->with('danger', 'Hanya dapat menghapus tim penilai yang tidak memiliki list nama.');
+        }
+
         $data->delete();
         return redirect()->route('tim.penilai')->with('success', 'Data berhasil dihapus.');
     }

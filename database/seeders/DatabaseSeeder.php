@@ -21,16 +21,16 @@ class DatabaseSeeder extends Seeder
             // DistrictsSeeder::class,
             // VillagesSeeder::class,
             TimPenilaiSeeder::class,
-            DupakSeeder::class,
+            // DupakSeeder::class,
             PKBSeeder::class,
             JabatanSeeder::class
         ]);
 
         User::create([
-            'name' => 'Admin',
+            'name' => 'Administrator',
             'username' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('sipak2023'),
         ]);
     }
 }

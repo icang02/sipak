@@ -80,6 +80,12 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               @endif
+              @if (session('danger'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {!! session('danger') !!}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              @endif
               @error('nip')
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   {!! $message !!}
@@ -117,7 +123,14 @@
                         <td>{{ $item->nama }}</td>
                         <td class="text-center">{{ $item->nip }}</td>
                         <td class="text-center">
-                          {{ $item->dupak_janjun->count() + $item->dupak_juldes->count() > 0 ? $item->dupak_janjun->count() + $item->dupak_juldes->count() . ' orang' : '-' }}
+                          @php
+                            $count = App\Models\DataDupak::where('pak_janjun', $item->id)
+                                ->orWhere('pak_juldes', $item->id)
+                                ->get()
+                                ->count();
+                          @endphp
+                          {{ $count > 0 ? $count . ' orang' : '-' }}
+                          {{-- {{ $item->dupak_janjun->count() + $item->dupak_juldes->count() > 0 ? $item->dupak_janjun->count() + $item->dupak_juldes->count() . ' orang' : '-' }} --}}
                         </td>
                         <td class="text-center">
                           <a href="{{ route('tim.penilai.dupak', $item->id) }}" class="btn btn-primary badge"
@@ -142,14 +155,16 @@
                             method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-danger badge" style="border-radius: 4px;">
+                            <button onclick="return confirm('Lanjutkan untuk menghapus?')" type="submit"
+                              class="btn btn-danger badge" style="border-radius: 4px;">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
                                 <path
                                   d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z" />
                                 <path
                                   d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-                              </svg></button>
+                              </svg>
+                            </button>
                           </form>
                         </td>
                       </tr>
@@ -186,7 +201,7 @@
                                   <i class="bx bx-x d-block d-sm-none"></i>
                                   <span class="d-none d-sm-block">Close</span>
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                                <button type="submit" class="btn btn-primary ml-1">
                                   <i class="bx bx-check d-block d-sm-none"></i>
                                   <span class="d-none d-sm-block">Update</span>
                                 </button>

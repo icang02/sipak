@@ -27,12 +27,12 @@
           </a>
         </li>
 
-        <li class="sidebar-item {{ request()->is('data-dupak*') ? 'active' : '' }}">
+        {{-- <li class="sidebar-item {{ request()->is('data-dupak*') ? 'active' : '' }}">
           <a href="{{ route('data.dupak') }}" class='sidebar-link'>
             <i data-feather="file-text" width="20"></i>
             <span>Data DUPAK</span>
           </a>
-        </li>
+        </li> --}}
 
         <li class="sidebar-item {{ request()->is('data-pkb*') ? 'active' : '' }}">
           <a href="{{ route('data.pkb') }}" class='sidebar-link'>

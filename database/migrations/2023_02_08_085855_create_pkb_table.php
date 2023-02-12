@@ -16,10 +16,10 @@ class CreatePkbTable extends Migration
         Schema::create('pkb', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 75);
-            $table->string('nip', 25)->nullable();
+            $table->string('nip', 25)->unique()->nullable();
             $table->foreignId('jabatan_id');
-            $table->string('pangkat', 20)->nullable();
-            $table->string('golongan', 10)->nullable();
+            $table->string('pangkat', 30)->nullable();
+            $table->string('golongan', 30)->nullable();
             $table->string('kota', 50)->nullable();
         });
     }

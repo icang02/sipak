@@ -19,6 +19,6 @@ class PKB extends Model
 
     public function data_dupak()
     {
-        return $this->hasMany(DataDupak::class, 'pkb_id');
+        return $this->hasMany(DataDupak::class, 'pkb_id')->orderBy('tahun');
     }
 }

@@ -26,4 +26,9 @@ class DataDupak extends Model
     {
         return $this->belongsTo(TimPenilai::class, 'pak_juldes');
     }
+
+    public function data_dukung()
+    {
+        return $this->hasMany(DataDukung::class);
+    }
 }

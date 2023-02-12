@@ -21,5 +21,6 @@ class JabatanSeeder extends Seeder
         Jabatan::create(['nama' => 'PKB Pemula']);       // 5
         Jabatan::create(['nama' => 'PKB Penyelia']);     // 6
         Jabatan::create(['nama' => 'PKB Terampil']);     // 7
+        Jabatan::create(['nama' => 'PLKB']);             // 8
     }
 }

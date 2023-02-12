@@ -69,6 +69,12 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               @endif
+              @if (session('danger'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {!! session('danger') !!}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              @endif
               @error('nama')
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   {!! $message !!}
@@ -103,9 +109,10 @@
                           <form action="{{ route('destroy.jabatan', $item->id) }}" class="d-inline" method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-danger badge" style="border-radius: 4px;">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-file-earmark-x" viewBox="0 0 16 16">
+                            <button onclick="return confirm('Hapus data jabatan. Lanjutkan?')" type="submit"
+                              class="btn btn-danger badge" style="border-radius: 4px;">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
                                 <path
                                   d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z" />
                                 <path

@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataDukungController;
 use App\Http\Controllers\DupakController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PKBController;
 use App\Http\Controllers\TimPenilaiController;
-use App\Models\Dupak;
+use App\Models\PKB;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -20,34 +21,47 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/seed', function () {
-    return Artisan::class('migrate:fresh --seed');
-});
-
-Route::get('/export', [DupakController::class, 'export'])->name('export');
+// Route::get('/seed', function () {
+//     return Artisan::class('migrate:fresh --seed');
+// });
+// Route::get('/aaa', function () {
+//     return Artisan::class('laravolt:indonesia:seed');
+// });
 
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
 Route::get('/dashboard', function () {
-    $dupak = Dupak::where('tahun', date('Y') - 1)->orderBy('nama')->get()->take(5);
+    $pkb = PKB::take(5)->orderBy('nama')->get();
 
     return view('dashboard.index', [
-        'dupak' => $dupak,
+        'pkb' => $pkb,
     ]);
 })->name('dashboard')->middleware('auth');
 
+
 // ROUTE DATA PKB
+Route::post('pkb/update/{pkb}', [PKBController::class, 'updatePKB'])->middleware('auth')->name('update.pkb');
+
 Route::get('data-pkb', [PKBController::class, 'index'])->name('data.pkb')->middleware('auth');
 Route::get('data-pkb/export', [PKBController::class, 'export'])->name('data.pkb.export')->middleware('auth');
+Route::get('data-pkb/exportList/{id}', [PKBController::class, 'exportList'])->name('data.pkb.exportList')->middleware('auth');
 Route::get('data-pkb/{data}', [PKBController::class, 'show'])->middleware('auth')->name('show.pkb');
+Route::post('data-pkb/store', [PKBController::class, 'store'])->middleware('auth')->name('store.data_dupak');
+Route::put('data-pkb/update', [PKBController::class, 'update'])->middleware('auth')->name('update.data_dupak');
+Route::delete('data-pkb/destroy/{id}', [PKBController::class, 'destroy'])->middleware('auth')->name('destroy.data_dupak');
+Route::post('tambah-pkb', [PKBController::class, 'tambahPKB'])->middleware('auth')->name('tambah.pkb');
+Route::delete('hapus-pkb/{data}', [PKBController::class, 'hapusPKB'])->middleware('auth')->name('hapus.pkb');
 
+Route::get('lihat/{tahun}/{id}', [PKBController::class, 'lihat'])->middleware('auth');
 Route::get('/data-dupak', [DupakController::class, 'index'])->name('data.dupak')->middleware('auth');
 Route::get('/data-dupak/add', [DupakController::class, 'create'])->name('add.dupak')->middleware('auth');
 Route::post('/add', [DupakController::class, 'store'])->name('store.dupak');
 Route::get('/data-dupak/edit/{data}', [DupakController::class, 'edit'])->name('edit.data.dupak')->middleware('auth');
 Route::put('/data-dupak/update/{data}', [DupakController::class, 'update'])->name('update.data.dupak')->middleware('auth');
+// ROUTE DATA DUKUNG
+Route::post('upload', [DataDukungController::class, 'upload'])->middleware('auth')->name('upload.data_dukung');
 
 
 // ROUTE AUTHENTICATE

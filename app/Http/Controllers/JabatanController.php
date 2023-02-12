@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jabatan;
+use App\Models\PKB;
 use Illuminate\Http\Request;
 
 class JabatanController extends Controller
@@ -44,6 +45,10 @@ class JabatanController extends Controller
 
     public function destroy(Jabatan $jabatan)
     {
+        $cekPKB = PKB::where('jabatan_id', $jabatan->id)->first()->count();
+        if ($cekPKB > 0) {
+            return back()->with('danger', 'Data jabatan masih digunakan pada data lain.');
+        }
         $jabatan->delete();
         return back()->with('success', 'Jabatan berhasil dihapus');
     }
