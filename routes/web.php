@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 //     return Artisan::class('laravolt:indonesia:seed');
 // });
 
+// PREVIEW PDF
+Route::get('preview/{tahun}/{id}', [PKBController::class, 'previewPdf'])->middleware('auth');
+
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');

@@ -344,7 +344,14 @@
                                 ->first();
                           @endphp
                           @if ($dupak->file != null)
-                            <a href="{{ route('lihat.data_dukung', [request()->tahun, $data->id]) }}" target="_blank"
+                            <!--<a href="{{ route('lihat.data_dukung', [request()->tahun, $data->id]) }}" target="_blank"-->
+                            <!--  class="btn btn-primary">-->
+                            <!--  Lihat Data-->
+                            <!--</a>-->
+                            @php
+                              $pdf = App\Models\DataDupak::where('tahun', request()->tahun)->where('pkb_id', $data->id)->get()->first();
+                            @endphp
+                            <a href="{{ url("storage/$pdf->file") }}" target="_blank"
                               class="btn btn-primary">
                               Lihat Data
                             </a>

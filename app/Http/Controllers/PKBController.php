@@ -79,6 +79,16 @@ class PKBController extends Controller
         $pathToFile = 'storage/' . $data->file;
         return response()->file($pathToFile);
     }
+    public function previewPdf($tahun, $id)
+    {
+        $data = DataDupak::where('tahun', $tahun)->where('pkb_id', $id)->get()->first();
+        dd($data->file);
+        // redirect jika data yang cari tidak ada
+        if (!$data) return abort(404);
+
+        $pathToFile = 'storage/' . $data->file;
+        return response()->file($pathToFile);
+    }
 
     // Tambah Data DUPAK untuk PKB
     public function store(Request $request)
