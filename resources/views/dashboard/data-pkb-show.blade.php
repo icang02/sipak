@@ -16,7 +16,7 @@
           @csrf
           <input type="hidden" name="pkb_id" value="{{ $data->id }}">
           <div class="modal-body">
-            <label for="pak_janjun">PAK JANJUN</label>
+            <label for="pak_janjun">Penilai PAK JANJUN</label>
             <div class="form-group">
               <select name="pak_janjun" id="pak_janjun" class="form-select">
                 <option value="">Pilih ...</option>
@@ -25,7 +25,7 @@
                 @endforeach
               </select>
             </div>
-            <label for="pak_juldes">PAK JULDES</label>
+            <label for="pak_juldes">Penilai PAK JULDES</label>
             <div class="form-group">
               <select name="pak_juldes" id="pak_juldes" class="form-select">
                 <option value="">Pilih ...</option>
@@ -291,8 +291,13 @@
                           <div class="position-relative">
                             <input type="hidden" name="tahun" value="{{ request()->tahun }}">
                             <input type="hidden" name="pkb_id" value="{{ $data->id }}">
-
-                            @if (request()->has('tahun'))
+                            @php
+                              $cekFile = App\Models\DataDupak::where('pkb_id', $data->id)
+                                  ->where('tahun', request()->tahun)
+                                  ->get()
+                                  ->first();
+                            @endphp
+                            @if ((request()->tahun && $cekFile == null) || $cekFile != null)
                               <input name="file" type="file" class="form-control" id="file"
                                 style="cursor: pointer;">
                             @else
@@ -314,12 +319,13 @@
                         </div>
                       </div>
                       <div class="col-12 d-flex justify-content-end mt-3">
-                        @if (request()->has('tahun'))
-                          <button type="submit" class="btn btn-danger me-1 mb-1">Upload</button>
-                          <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                        @else
+
+                        @if (!request()->has('tahun') || $cekFile->file != null)
                           <button type="button" disabled class="btn btn-danger me-1 mb-1">Upload</button>
                           <button type="button" disabled class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                        @else
+                          <button type="submit" class="btn btn-danger me-1 mb-1">Upload</button>
+                          <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                         @endif
                       </div>
 
@@ -331,24 +337,36 @@
                         @endphp
                         @if (request()->has('tahun'))
                           @php
-                            $dupak = App\Models\DataDupak::where('tahun', request()->tahun)
-                                ->where('pkb_id', $data->data_dupak->first()->pkb_id)
+                            // cek kalo ada data file
+                            $dupak = App\Models\DataDupak::where('pkb_id', $data->data_dupak->first()->pkb_id)
+                                ->where('tahun', request()->tahun)
                                 ->get()
                                 ->first();
                           @endphp
                           @if ($dupak->file != null)
-                            <a href="{{ url('lihat/' . request()->tahun . '/' . $data->id) }}" target="_blank"
+                            <a href="{{ route('lihat.data_dukung', [request()->tahun, $data->id]) }}" target="_blank"
                               class="btn btn-primary">
                               Lihat Data
+                            </a>
+                            <a onclick="return confirm('Hapus data dukung?')"
+                              href="{{ route('delete.data_dukung', [$dupak->pkb_id, request()->tahun]) }}"
+                              class="btn btn-danger">
+                              Hapus Data
                             </a>
                           @else
                             <button disabled class="btn btn-primary">
                               Lihat Data
                             </button>
+                            <button disabled class="btn btn-danger">
+                              Hapus Data
+                            </button>
                           @endif
                         @else
                           <button disabled class="btn btn-primary">
                             Lihat Data
+                          </button>
+                          <button disabled class="btn btn-danger">
+                            Hapus Data
                           </button>
                         @endif
                         {{-- @else --}}
@@ -413,20 +431,21 @@
                               stroke-linejoin="round" class="feather feather-edit">
                               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
+                            </svg> Edit
                           </button>
                           <form action="{{ route('destroy.data_dupak', $dupak->id) }}" method="post"
                             class="d-inline">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-danger badge" style="border-radius: 4px;">
+                            <button onclick="return confirm('Hapus data DUPAK?')" type="submit"
+                              class="btn btn-danger badge" style="border-radius: 4px;">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
                                 <path
                                   d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z" />
                                 <path
                                   d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-                              </svg>
+                              </svg> Hapus
                             </button>
                           </form>
                         </td>

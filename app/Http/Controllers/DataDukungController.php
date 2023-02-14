@@ -18,16 +18,31 @@ class DataDukungController extends Controller
             'file.mimes' => 'Upload file dengan format .pdf.'
         ]);
 
-        $pkb = DataDupak::where('pkb_id', $request->pkb_id)->where('tahun', $request->tahun)->get()->first();
-        if ($pkb->file != null) {
-            Storage::delete($pkb->file);
-        }
+        $dupak = DataDupak::where('pkb_id', $request->pkb_id)->where('tahun', $request->tahun)->get()->first();
+        // if ($pkb->file != null) {
+        //     Storage::delete($pkb->file);
+        // }
+        // dd($pkb);
 
         $fileDataDukung = $request->file('file')->store('data-dukung');
-        $pkb->update([
+        $dupak->update([
             'file' => $fileDataDukung,
         ]);
 
         return back()->with('success', 'File telah diupload.');
+    }
+
+    public function delete($pkbId, $tahun)
+    {
+        // hapus file
+        // dd($pkbId, $tahun);
+        $dupak = DataDupak::where('pkb_id', $pkbId)
+            ->where('tahun', $tahun)
+            ->get()->first();
+        // dd($dupak);
+        Storage::delete($dupak->file);
+        $dupak->update(['file' => null]);
+
+        return back()->with('success', 'File data dukung berhasil dihapus.');
     }
 }

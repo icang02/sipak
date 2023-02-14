@@ -54,7 +54,7 @@ Route::delete('data-pkb/destroy/{id}', [PKBController::class, 'destroy'])->middl
 Route::post('tambah-pkb', [PKBController::class, 'tambahPKB'])->middleware('auth')->name('tambah.pkb');
 Route::delete('hapus-pkb/{data}', [PKBController::class, 'hapusPKB'])->middleware('auth')->name('hapus.pkb');
 
-Route::get('lihat/{tahun}/{id}', [PKBController::class, 'lihat'])->middleware('auth');
+Route::get('show/{tahun}/{id}', [PKBController::class, 'lihat'])->middleware('auth')->name('lihat.data_dukung');
 Route::get('/data-dupak', [DupakController::class, 'index'])->name('data.dupak')->middleware('auth');
 Route::get('/data-dupak/add', [DupakController::class, 'create'])->name('add.dupak')->middleware('auth');
 Route::post('/add', [DupakController::class, 'store'])->name('store.dupak');
@@ -62,6 +62,7 @@ Route::get('/data-dupak/edit/{data}', [DupakController::class, 'edit'])->name('e
 Route::put('/data-dupak/update/{data}', [DupakController::class, 'update'])->name('update.data.dupak')->middleware('auth');
 // ROUTE DATA DUKUNG
 Route::post('upload', [DataDukungController::class, 'upload'])->middleware('auth')->name('upload.data_dukung');
+Route::get('data-dukung/delete/{pkbId}/{tahun}', [DataDukungController::class, 'delete'])->middleware('auth')->name('delete.data_dukung');
 
 
 // ROUTE AUTHENTICATE

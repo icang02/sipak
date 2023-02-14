@@ -72,6 +72,7 @@ class PKBController extends Controller
     public function lihat($tahun, $id)
     {
         $data = DataDupak::where('tahun', $tahun)->where('pkb_id', $id)->get()->first();
+        // dd($data->file);
         // redirect jika data yang cari tidak ada
         if (!$data) return abort(404);
 
@@ -161,12 +162,17 @@ class PKBController extends Controller
     public function hapusPKB(PKB $data)
     {
         $fileHapus = DataDupak::where('pkb_id', $data->id)->get();
-        foreach ($fileHapus as $data) {
-            if ($data->file != null) {
-                Storage::delete($data->file);
+        // dd($fileHapus);
+        foreach ($fileHapus as $item) {
+            if ($item->file != null) {
+                Storage::delete($item->file);
             }
+            // dd($item);
+            $item->delete();
         }
+
         $data->delete();
+
         return back()->with('success', 'Data pegawai berhasil dihapus');
     }
 }
